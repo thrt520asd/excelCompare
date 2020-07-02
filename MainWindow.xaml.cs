@@ -96,6 +96,8 @@ namespace excelCompare
             string content2 = getWBContent(wb2);
             Trace.WriteLine("content1"+content1);
             Trace.WriteLine("content2"+content2);
+            Window1 window1 = new Window1();
+            window1.Show();
         }
 
         //private string GetSheetRow(ISheet sheet)

@@ -49,3 +49,8 @@ D:\project\excelCompare\obj\Debug\netcoreapp3.1\excelCompare.csproj.CoreCompileI
 D:\project\excelCompare\obj\Debug\netcoreapp3.1\excelCompare.csproj.CopyComplete
 D:\project\excelCompare\obj\Debug\netcoreapp3.1\excelCompare.genruntimeconfig.cache
 D:\project\excelCompare\obj\Debug\netcoreapp3.1\CompareResult.g.cs
+D:\project\excelCompare\bin\Debug\netcoreapp3.1\GalaSoft.MvvmLight.Extras.dll
+D:\project\excelCompare\bin\Debug\netcoreapp3.1\GalaSoft.MvvmLight.Platform.dll
+D:\project\excelCompare\bin\Debug\netcoreapp3.1\GalaSoft.MvvmLight.dll
+D:\project\excelCompare\bin\Debug\netcoreapp3.1\System.Windows.Interactivity.dll
+D:\project\excelCompare\obj\Debug\netcoreapp3.1\CompareResult.baml

@@ -6,9 +6,9 @@ using System.Text;
 
 namespace excelCompare.ViewModel
 {
-    public class CompareResultViewModel:ViewModelBase
+    public class CompareResultViewModel//:ViewModelBase
     {
-        private ObservableCollection<CompareResult> compareResultList;
+        public ObservableCollection<CompareResult> compareResultList;
 
         public void Init(List<CompareResult> resList)
         {

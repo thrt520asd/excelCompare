@@ -1,4 +1,5 @@
-﻿using System;
+﻿using excelCompare.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace excelCompare
         public Window1()
         {
             InitializeComponent();
+            CompareResultViewModel viewMode = new CompareResultViewModel();
+            viewMode.testInit();
         }
     }
 
