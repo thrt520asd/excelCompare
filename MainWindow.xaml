@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Name="btn1" Content="文件1" HorizontalAlignment="Left" Margin="171,197,0,0" VerticalAlignment="Top" Height="66" Width="121" Click="btn1_Click"/>
-        <Button Name="btn2" Content="文件2" HorizontalAlignment="Left" Margin="390,197,0,0" VerticalAlignment="Top" Height="66" Width="121" Click="btn2_Click"/>
-        <Button Name="compareBtn" Content="比较" HorizontalAlignment="Left" Margin="279,309,0,0" VerticalAlignment="Top" Height="66" Width="121" Click="compareBtn_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="145*"/>
+            <RowDefinition Height="11*"/>
+        </Grid.RowDefinitions>
+        <Button Name="btn1" Content="文件1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="66" Width="121" Click="btn1_Click" Margin="0,0,300,0"/>
+        <Button Name="btn2" Content="文件2" HorizontalAlignment="Center" Margin="300,0,0,0" VerticalAlignment="Center" Height="66" Width="121" Click="btn2_Click"/>
+        <Button Name="compareBtn" Content="比较" HorizontalAlignment="Center" VerticalAlignment="Center" Height="66" Width="121" Click="compareBtn_Click" Margin="0,300,0,0"/>
 
     </Grid>
 </Window>

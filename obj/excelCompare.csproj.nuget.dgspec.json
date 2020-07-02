@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "F:\\project\\excelCompare\\excelCompare\\excelCompare.csproj": {}
+    "D:\\project\\excelCompare\\excelCompare.csproj": {}
   },
   "projects": {
-    "F:\\project\\excelCompare\\excelCompare\\excelCompare.csproj": {
+    "D:\\project\\excelCompare\\excelCompare.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\project\\excelCompare\\excelCompare\\excelCompare.csproj",
+        "projectUniqueName": "D:\\project\\excelCompare\\excelCompare.csproj",
         "projectName": "excelCompare",
-        "projectPath": "F:\\project\\excelCompare\\excelCompare\\excelCompare.csproj",
-        "packagesPath": "C:\\Users\\thrt5\\.nuget\\packages\\",
-        "outputPath": "F:\\project\\excelCompare\\excelCompare\\obj\\",
+        "projectPath": "D:\\project\\excelCompare\\excelCompare.csproj",
+        "packagesPath": "C:\\Users\\zhaowenpeng\\.nuget\\packages\\",
+        "outputPath": "D:\\project\\excelCompare\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thrt5\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\zhaowenpeng\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,6 +41,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "MvvmLightLibs": {
+              "target": "Package",
+              "version": "[5.4.1.1, )"
+            },
             "NPOI": {
               "target": "Package",
               "version": "[2.5.1, )"
@@ -61,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

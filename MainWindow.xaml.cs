@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using NPOI.SS.UserModel;
+//using NPOI.SS.UserModel;
 
 namespace excelCompare
 {
@@ -77,9 +78,7 @@ namespace excelCompare
 
         private void compareBtn_Click(object sender, RoutedEventArgs e)
         {
-            test();
-            return;
-            if(string.IsNullOrEmpty(excel_path_1) || string.IsNullOrEmpty(excel_path_2))
+            if (string.IsNullOrEmpty(excel_path_1) || string.IsNullOrEmpty(excel_path_2))
             {
                 MessageBox.Show("重新选择文件");
                 return;
@@ -164,16 +163,17 @@ namespace excelCompare
         
         private void test()
         {
-            List<string> list1 = new List<string>() { "a","b","c","d"};
-            List<string> list2 = new List<string>() { "a", "b", "c", "d","e" };
+            List<string> list1 = new List<string>() { "a","b","c","a","b","b","a"};
+            List<string> list2 = new List<string>() { "c", "b", "a", "b","a","c" };
 
             var res = shortestEditScript(list1, list2);
             int index1 = 0;
             int index2 = 0;
-
+            Log(res.Count);
             for (int i = 0; i < res.Count; i++)
             {
                 var oper = res[i];
+                Trace.WriteLine("oper:" +oper.ToString());
                 switch (oper) {
                     case Operation.Add:
                         Trace.WriteLine("+" + list2[index2]);
@@ -193,7 +193,28 @@ namespace excelCompare
             }
         }
 
+        private void LogTree(List<Dictionary<int,int>> dicList)
+        {
+            for (int d = 0; d < dicList.Count; d++)
+            {
+                Log("d = " + d.ToString());
+                var v = dicList[d];
+                for (int k = -d; k <= d; k+=2)
+                {
+                    if (v.ContainsKey(k))
+                    {
+                        var x = v[k];
+                        var y = x - k;
+                        Log(string.Format("k = {0}:({1},{2})", k, x, y));
+                    }
+                }
+            }
+        }
 
+        private void Log(object obj)
+        {
+            Trace.WriteLine(obj.ToString());
+        }
 
         private List<Operation> shortestEditScript(List<string> src, List<string> dst)
         {
@@ -204,6 +225,7 @@ namespace excelCompare
             int x, y;
             for (int i = 0; i <= max; i++)
             {
+                Log(i);
                 var v = new Dictionary<int, int>();
                 trace.Add(v);
                 if(i == 0)
@@ -235,20 +257,25 @@ namespace excelCompare
                     v[j] = x;
                     if(x == n && y == m)
                     {
-                        break;
+                        goto quit;
                     }
                 }
             }
+
+        //return;
+        quit:
+            Log(trace.Count);
+            LogTree(trace);
             //1添加 2删除 3移动
             List<Operation> script = new List<Operation>();
             x = n;
             y = m;
             int k, prevK, prevX, prevY;
-            for (int d = trace.Count; d > 0; d--)
+            for (int d = trace.Count -1 ; d > 0; d--)
             {
                 k = x - y;
                 var lastV = trace[d - 1];
-                if(k == -d||k !=d && lastV[k - 1] < lastV[k + 1])
+                if(k == -d||(k !=d && lastV[k - 1] < lastV[k + 1]))
                 {
                     prevK = k + 1;
                 }
@@ -267,11 +294,11 @@ namespace excelCompare
                 }
                 if(x == prevX)
                 {
-                    script.Append(Operation.Add);
+                    script.Add(Operation.Add);
                 }
                 else
                 {
-                    script.Append(Operation.Delete);
+                    script.Add(Operation.Delete);
                 }
                 x = prevX;
                 y = prevY;
@@ -285,9 +312,6 @@ namespace excelCompare
             }
              script.Reverse();
             return script;
-            //return reverse(script);
         }
-
-        
     }
 }
