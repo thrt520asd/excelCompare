@@ -7,11 +7,47 @@
         mc:Ignorable="d"
         Title="比较结果" Height="450" Width="800" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-    <DataGrid Grid.Row="1" ColumnWidth="*" AutoGenerateColumns="False" ItemsSource="{Binding compareResultList}">
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="行数" Binding="{Binding index}"/>
-            <DataGridTextColumn Header="状态" Binding="{Binding oper}"/>
-            <DataGridTextColumn Header="内容" Binding="{Binding content}"/>
-        </DataGrid.Columns>
-    </DataGrid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" Orientation="Vertical" >
+            <StackPanel Orientation="Horizontal">
+                <Label Content="源表格：" Background="#FF8BFF85"></Label>
+                <Label Content="C:\\" x:Name="srcPathLabel" Background="#FF8BFF85"></Label>
+                
+                <Label Content="对比表格：" Background="#FFFFE855"></Label>
+                <Label Content="C:\\" x:Name="dstPathLabel" Background="#FFFFE855"></Label>
+                
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" x:Name="TabStackPanel">
+            <Label Content="Tab:" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="20"></Label>
+            
+        </StackPanel>
+        
+        <DataGrid Grid.Row="2" ColumnWidth="*" AutoGenerateColumns="False" x:Name="grid1">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding oper}" Value="Add">
+                            <Setter Property="Background" Value="#FF8BFF85" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding oper}" Value="Delete">
+                            <Setter Property="Background" Value="#FFFF6455" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="行数" Binding="{Binding index}"/>
+                <DataGridTextColumn Header="状态" Binding="{Binding oper}"/>
+                <DataGridTextColumn Header="内容" Binding="{Binding content}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+        
 </Window>

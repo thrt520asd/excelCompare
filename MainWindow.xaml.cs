@@ -29,23 +29,19 @@ namespace excelCompare
         public MainWindow()
         {
             InitializeComponent();
-            btn1.Content = "未选中";
-            btn2.Content = "未选中";
-
+            btn1.Content = "请选择第一个文件";
+            btn2.Content = "请选择第二个文件";
+            
+            
         }
 
-        public enum Operation { 
-            Add = 1,
-            Delete = 2,
-            Move = 3,
-        }
-
-        
+      
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string filePath = SelectFileWpf();
             Button button = e.Source as Button;
+            
             button.Content = System.IO.Path.GetFileName(filePath);
             excel_path_1 = filePath;
             MessageBox.Show(filePath);
@@ -53,17 +49,13 @@ namespace excelCompare
 
         
 
-        public void Compare(string excel1,string excel2)
-        {
-
-        }
 
 
         public string SelectFileWpf()
         {
             var openFileDialog = new Microsoft.Win32.OpenFileDialog()
             {
-                Filter = "Excel (.xls)|*.xls|All files (*.*)|*.*"
+                Filter = "Excel (.xlsx)|*.xlsx|All files (*.*)|*.*"
             };
             var result = openFileDialog.ShowDialog();
             if (result == true)
@@ -88,55 +80,12 @@ namespace excelCompare
                 MessageBox.Show("文件源相同，请重新选择文件");
                 return;
             }
-            FileStream fs1 = new FileStream(excel_path_1, FileMode.Open, FileAccess.ReadWrite);
-            IWorkbook wb1 = WorkbookFactory.Create(fs1);
-            FileStream fs2 = new FileStream(excel_path_1, FileMode.Open, FileAccess.ReadWrite);
-            IWorkbook wb2 = WorkbookFactory.Create(fs2);
-            string content1 = getWBContent(wb1);
-            string content2 = getWBContent(wb2);
-            Trace.WriteLine("content1"+content1);
-            Trace.WriteLine("content2"+content2);
             Window1 window1 = new Window1();
             window1.Show();
-        }
-
-        //private string GetSheetRow(ISheet sheet)
-        //{
-        //    StringBuilder sb = new StringBuilder();
+            window1.Init(excel_path_1, excel_path_2);
             
-        //    for (int i = 0; i < sheet.LastRowNum; i++)
-        //    {
-                
-        //    }
-        //}
-
-        private string getWBContent(IWorkbook workbook) {
-            int nSheets = workbook.NumberOfSheets;
-            for (int i = 0; i < nSheets - 1; i++)
-            {
-                
-                //获取表格名字
-                string strSheetName = workbook.GetSheetName(i);
-                {
-                    ISheet sheet = workbook.GetSheetAt(i);
-                    int nRowsCount = sheet.LastRowNum + 1;
-                    StringBuilder sb = new StringBuilder();
-                    for (int k = 0; k < nRowsCount - 1; k++)
-                    {
-                        IRow row = sheet.GetRow(k);
-                        for (int j = 0; j < row.Cells.Count - 1; j++)
-                        {
-                            var cell = row.GetCell(j);
-                            sb.Append(row.GetCell(j).ToString());
-                            sb.Append("|");
-                        }
-                        sb.AppendLine();
-                    }
-                    return sb.ToString();
-                }
-            }
-            return "";
         }
+
 
         
 
@@ -162,46 +111,21 @@ namespace excelCompare
             excel_path_1 = filePath;
         }
 
-        
-        private void test()
+    }
+
+    public static class Logger {
+        public static void Log(object obj)
         {
-            List<string> list1 = new List<string>() { "a","b","c","a","b","b","a"};
-            List<string> list2 = new List<string>() { "c", "b", "a", "b","a","c" };
-
-            var res = shortestEditScript(list1, list2);
-            int index1 = 0;
-            int index2 = 0;
-            Log(res.Count);
-            for (int i = 0; i < res.Count; i++)
-            {
-                var oper = res[i];
-                Trace.WriteLine("oper:" +oper.ToString());
-                switch (oper) {
-                    case Operation.Add:
-                        Trace.WriteLine("+" + list2[index2]);
-                        index2++;
-                        break;
-                    case Operation.Move:
-                        Trace.WriteLine(" " + list1[index1]);
-                        index2++;
-                        index1++;
-                        break;
-                    case Operation.Delete:
-                        Trace.WriteLine("-" + list1[index1]);
-                        index1++;
-                        break;
-                }
-
-            }
+            Trace.WriteLine(obj.ToString());
         }
 
-        private void LogTree(List<Dictionary<int,int>> dicList)
+        public static void LogTree(List<Dictionary<int, int>> dicList)
         {
             for (int d = 0; d < dicList.Count; d++)
             {
                 Log("d = " + d.ToString());
                 var v = dicList[d];
-                for (int k = -d; k <= d; k+=2)
+                for (int k = -d; k <= d; k += 2)
                 {
                     if (v.ContainsKey(k))
                     {
@@ -212,108 +136,6 @@ namespace excelCompare
                 }
             }
         }
-
-        private void Log(object obj)
-        {
-            Trace.WriteLine(obj.ToString());
-        }
-
-        private List<Operation> shortestEditScript(List<string> src, List<string> dst)
-        {
-            int n = src.Count;
-            int m = dst.Count;
-            int max = n + m;
-            List<Dictionary<int, int>> trace = new List<Dictionary<int, int>>();
-            int x, y;
-            for (int i = 0; i <= max; i++)
-            {
-                Log(i);
-                var v = new Dictionary<int, int>();
-                trace.Add(v);
-                if(i == 0)
-                {
-                    int t = 0;
-                    while (n > t && m > t && src[t] == dst[t])
-                    {
-                        t++;
-                    }
-                    v[0] = t;
-                    continue;
-                }
-                var lastV = trace[i - 1];
-                for (int j = -i; j <= i; j+=2)
-                {
-                    if(j == -i || (j!= i && lastV[j-1] < lastV[j + 1])){
-                        x = lastV[j + 1];
-                    }
-                    else
-                    {
-                        x = lastV[j - 1] + 1;
-                    }
-                    y = x - j;
-                    while (x<n&& y<m && src[x] == dst[y])
-                    {
-                        x = x + 1;
-                        y = y + 1;
-                    }
-                    v[j] = x;
-                    if(x == n && y == m)
-                    {
-                        goto quit;
-                    }
-                }
-            }
-
-        //return;
-        quit:
-            Log(trace.Count);
-            LogTree(trace);
-            //1添加 2删除 3移动
-            List<Operation> script = new List<Operation>();
-            x = n;
-            y = m;
-            int k, prevK, prevX, prevY;
-            for (int d = trace.Count -1 ; d > 0; d--)
-            {
-                k = x - y;
-                var lastV = trace[d - 1];
-                if(k == -d||(k !=d && lastV[k - 1] < lastV[k + 1]))
-                {
-                    prevK = k + 1;
-                }
-                else
-                {
-                    prevK = k - 1;
-                }
-
-                prevX = lastV[prevK];
-                prevY = prevX - prevK;
-                while(x>prevX&& y > prevY)
-                {
-                    script.Add(Operation.Move);
-                    x -= 1;
-                    y -= 1;
-                }
-                if(x == prevX)
-                {
-                    script.Add(Operation.Add);
-                }
-                else
-                {
-                    script.Add(Operation.Delete);
-                }
-                x = prevX;
-                y = prevY;
-            }
-            if(trace[0][0] != 0)
-            {
-                for (int i = 0; i < trace[0][0]; i++)
-                {
-                    script.Add(Operation.Move);
-                }
-            }
-             script.Reverse();
-            return script;
-        }
     }
+
 }
