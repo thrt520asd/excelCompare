@@ -70,21 +70,11 @@ namespace excelCompare
 
         private void compareBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(excel_path_1) || string.IsNullOrEmpty(excel_path_2))
-            {
-                MessageBox.Show("重新选择文件");
-                return;
-            }
-            if(excel_path_1 == excel_path_2)
-            {
-                MessageBox.Show("文件源相同，请重新选择文件");
-                return;
-            }
-            Window1 window1 = new Window1();
-            window1.Show();
-            window1.Init(excel_path_1, excel_path_2);
+            Window1.ShowCompareWin(excel_path_1, excel_path_2);
             
         }
+
+        
 
 
         
